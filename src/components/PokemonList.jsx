@@ -7,26 +7,26 @@ function PokemonList() {
   const { allPokemons, loading, filteredPokemons } = useContext(PokemonContext);
   return (
     <>
-      {loading ? (
-        <Loader />
-      ) : (
-        <div>
-          {filteredPokemons.length ? (
-            <>
-              {filteredPokemons.map((pokemon) => (
-                <CardPokemon pokemon={pokemon} key={pokemon.id} />
-              ))}
-            </>
-          ) : (
-            <>
-              {allPokemons.map((pokemon) => (
-                <CardPokemon pokemon={pokemon} key={pokemon.id} />
-              ))}
-            </>
-          )}
-        </div>
-      )}
-    </>
+			{loading ? (
+				<Loader />
+			) : (
+				<div className='card-list-pokemon container bg-amber-100'>
+					{filteredPokemons.length ? (
+						<>
+							{filteredPokemons.map(pokemon => (
+								<CardPokemon pokemon={pokemon} key={pokemon.id} />
+							))}
+						</>
+					) : (
+						<>
+							{allPokemons.map(pokemon => (
+								<CardPokemon pokemon={pokemon} key={pokemon.id} />
+							))}
+						</>
+					)}
+				</div>
+			)}
+		</>
   );
 }
 
