@@ -68,6 +68,7 @@ function PokemonProvider({ children }) {
 
   useEffect(() => {
     getAllPokemons();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [offset]);
 
   useEffect(() => {

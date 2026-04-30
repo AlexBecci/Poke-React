@@ -5,7 +5,7 @@ import PrimaryButton from "../components/ui/PrimaryButton";
 import { PokemonContext } from "../context/PokemonContext";
 
 function HomePage() {
-  const { onClickLoadMore, active, setActive } = useContext(PokemonContext);
+  const { onClickLoadMore, setActive } = useContext(PokemonContext);
 
   const toggleFilter = useCallback(() => setActive((prev) => !prev), [setActive]);
 
