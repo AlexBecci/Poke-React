@@ -36,22 +36,13 @@ function PokemonProvider({ children }) {
     setLoading(false);
   };
 
-  // Llamar todos los pokemones
+  // Solo guarda la lista de nombres+URLs (sin fetch individual)
+  // Se usa para búsqueda por nombre y como índice general
   const getGlobalPokemons = async () => {
     const baseURL = "https://pokeapi.co/api/v2/";
-
     const res = await fetch(`${baseURL}pokemon?limit=100000&offset=0`);
     const data = await res.json();
-
-    const promises = data.results.map(async (pokemon) => {
-      const res = await fetch(pokemon.url);
-      const data = await res.json();
-      return data;
-    });
-    const results = await Promise.all(promises);
-
-    setGlobalPokemons(results);
-    setLoading(false);
+    setGlobalPokemons(data.results); // [{ name, url }]
   };
 
   // Llamar a un pokemon por ID
@@ -61,6 +52,18 @@ function PokemonProvider({ children }) {
     const res = await fetch(`${baseURL}pokemon/${id}`);
     const data = await res.json();
     return data;
+  };
+
+  // Llamar la cadena evolutiva de un pokemon
+  const getEvolutionChain = async (id) => {
+    const baseURL = "https://pokeapi.co/api/v2/";
+
+    const speciesRes = await fetch(`${baseURL}pokemon-species/${id}`);
+    const speciesData = await speciesRes.json();
+
+    const evolutionRes = await fetch(speciesData.evolution_chain.url);
+    const evolutionData = await evolutionRes.json();
+    return evolutionData;
   };
 
   useEffect(() => {
@@ -109,7 +112,8 @@ function PokemonProvider({ children }) {
     });
 
     if (e.target.checked) {
-      const filteredResults = globalPokemons.filter((pokemon) =>
+      // Filtra desde allPokemons (ya cargados con datos completos)
+      const filteredResults = allPokemons.filter((pokemon) =>
         pokemon.types.map((type) => type.type.name).includes(e.target.name)
       );
       setfilteredPokemons([...filteredPokemons, ...filteredResults]);
@@ -131,6 +135,7 @@ function PokemonProvider({ children }) {
         allPokemons,
         globalPokemons,
         getPokemonByID,
+        getEvolutionChain,
         onClickLoadMore,
         // Loader
         loading,

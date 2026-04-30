@@ -1,44 +1,44 @@
-import React, { useContext } from "react";
-import { act } from "react-dom/test-utils";
+import React, { memo, useCallback, useContext } from "react";
 import FilterBar from "../components/FilterBar";
 import PokemonList from "../components/PokemonList";
+import PrimaryButton from "../components/ui/PrimaryButton";
 import { PokemonContext } from "../context/PokemonContext";
 
 function HomePage() {
   const { onClickLoadMore, active, setActive } = useContext(PokemonContext);
 
+  const toggleFilter = useCallback(() => setActive((prev) => !prev), [setActive]);
+
   return (
     <>
-      <section className="bg-white">
-        <div className="container-filter container bg-white">
-          <div className="icon-filter" onClick={() => setActive(!active)}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="icon"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"
-              />
-            </svg>
-            <span>Filtrar</span>
-          </div>
-        </div>
-        <PokemonList />
-        <FilterBar />
-        <div className="container-btn-load-more container">
-          <button className="btn-load-more" onClick={onClickLoadMore}>
-            Cargar más
-          </button>
-        </div>
-      </section>
+      <div className="container" style={{ padding: "24px 24px 8px", display: "flex" }}>
+        <PrimaryButton variant="ghost" onClick={toggleFilter}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            style={{ width: 18, height: 18 }}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"
+            />
+          </svg>
+          Filtrar
+        </PrimaryButton>
+      </div>
+
+      <PokemonList />
+      <FilterBar />
+
+      <div className="load-more-area">
+        <PrimaryButton onClick={onClickLoadMore}>Cargar más</PrimaryButton>
+      </div>
     </>
   );
 }
 
-export default HomePage;
+export default memo(HomePage);

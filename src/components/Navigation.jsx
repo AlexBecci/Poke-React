@@ -1,41 +1,58 @@
-import React, { useContext } from "react";
+import React, { memo, useCallback, useContext } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { PokemonContext } from "../context/PokemonContext";
+import PrimaryButton from "./ui/PrimaryButton";
 
 function Navigation() {
-  const { onInputChange, valueSearch, onResetForm } =
-    useContext(PokemonContext);
-
+  const { onInputChange, valueSearch, onResetForm } = useContext(PokemonContext);
   const navigate = useNavigate();
 
-  const onSearchSubmit = (e) => {
-    e.preventDefault();
-    navigate("/search", {
-      state: valueSearch,
-    });
+  const onSearchSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      navigate("/search", { state: valueSearch });
+      onResetForm();
+    },
+    [valueSearch, navigate, onResetForm]
+  );
 
-    onResetForm();
-  };
   return (
     <>
-      <section className="bg-white">
-        <header className="container">
-          <Link to="/" className="logo">
+      <header className="glass-nav">
+        <div
+          className="container"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "16px 24px",
+          }}
+        >
+          <Link to="/" style={{ lineHeight: 0 }}>
             <img
               src="https://archives.bulbagarden.net/media/upload/4/4b/Pok%C3%A9dex_logo.png"
-              alt="Logo Pokedex"
+              alt="Logo Pokédex"
             />
           </Link>
 
-          <form onSubmit={onSearchSubmit}>
-            <div className="form-group">
+          <form
+            onSubmit={onSearchSubmit}
+            style={{ display: "flex", alignItems: "center", gap: "12px" }}
+          >
+            <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth="1.5"
-                stroke="currentColor"
-                className="icon-search"
+                stroke="rgba(255,255,255,0.45)"
+                style={{
+                  width: 18,
+                  height: 18,
+                  position: "absolute",
+                  left: 14,
+                  pointerEvents: "none",
+                }}
               >
                 <path
                   strokeLinecap="round"
@@ -44,23 +61,24 @@ function Navigation() {
                 />
               </svg>
               <input
-                className="bg-slate-900 text-white rounded-full px-5"
+                className="glass-input"
                 type="search"
                 name="valueSearch"
-                id=""
                 value={valueSearch}
                 onChange={onInputChange}
-                placeholder="Buscar nombre de pokemon"
+                placeholder="Buscar Pokémon..."
+                style={{ paddingLeft: 42, width: 280 }}
               />
             </div>
 
-            <button className="btn-search">Buscar</button>
+            <PrimaryButton type="submit">Buscar</PrimaryButton>
           </form>
-        </header>
-      </section>
+        </div>
+      </header>
+
       <Outlet />
     </>
   );
 }
 
-export default Navigation;
+export default memo(Navigation);

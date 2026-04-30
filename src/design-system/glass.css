@@ -1,0 +1,514 @@
+/* ================================================================
+   Tranquil Dex — Component Styles
+   Dark deep theme (#10141D). No gradient canvas. Subtle glass.
+   8px spacing grid throughout.
+   ================================================================ */
+
+/* ── Inter Font ──────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* ── CSS Design Tokens ───────────────────────────────────────── */
+:root {
+  /* Glass surfaces — subtle on a dark solid background */
+  --glass-standard-bg:       rgba(255, 255, 255, 0.04);
+  --glass-elevated-bg:       rgba(255, 255, 255, 0.08);
+  --glass-border:            rgba(255, 255, 255, 0.09);
+  --glass-border-inner:      rgba(255, 255, 255, 0.06);
+  --glass-blur-standard:     blur(12px);
+  --glass-blur-elevated:     blur(24px);
+  --glass-shadow-standard:   0 4px 24px 0 rgba(0, 0, 0, 0.35);
+  --glass-shadow-elevated:   0 8px 40px 0 rgba(0, 0, 0, 0.50);
+
+  /* Palette */
+  --color-bg:                #10141D;
+  --color-bg-raised:         #161B27;
+  --color-bg-card:           #1C2133;
+  --color-bg-hover:          #222840;
+  --color-border:            rgba(255, 255, 255, 0.08);
+  --color-on-surface:        #C8D0E8;
+  --color-on-surface-var:    #7A849C;
+  --color-primary:           #E8EDF8;
+  --color-on-primary:        #10141D;
+  --color-primary-fixed-dim: #B0BAD0;
+  --color-accent:            #5B8BF5;   /* soft blue accent */
+  --color-accent-dim:        rgba(91, 139, 245, 0.15);
+  --color-secondary:         #7FAADC;
+  --color-outline:           rgba(255, 255, 255, 0.08);
+
+  --rounded-sm:   0.25rem;
+  --rounded-md:   0.5rem;
+  --rounded-lg:   0.75rem;
+  --rounded-xl:   1rem;
+  --rounded-2xl:  1.5rem;
+  --rounded-full: 9999px;
+
+  --font-sans: 'Inter', sans-serif;
+}
+
+/* ── Glass Container ─────────────────────────────────────────── */
+.glass-container {
+  position: relative;
+  color: var(--color-primary);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--rounded-xl);
+  box-shadow: var(--glass-shadow-standard);
+}
+
+/* ── Glass Navigation ────────────────────────────────────────── */
+.glass-nav {
+  background: rgba(16, 20, 29, 0.92);
+  backdrop-filter:         var(--glass-blur-standard);
+  -webkit-backdrop-filter: var(--glass-blur-standard);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* ── Glass Input ─────────────────────────────────────────────── */
+.glass-input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--color-border);
+  border-radius: var(--rounded-full);
+  padding: 10px 20px;
+  color: var(--color-primary);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 400;
+  outline: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.glass-input::placeholder { color: var(--color-on-surface-var); }
+.glass-input:focus {
+  border-color: var(--color-accent);
+  background: rgba(91, 139, 245, 0.06);
+}
+
+/* ── Buttons ─────────────────────────────────────────────────── */
+.glass-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: var(--rounded-full);
+  height: 40px;
+  padding: 0 20px;
+  cursor: pointer;
+  outline: none;
+  text-decoration: none;
+  transition: background-color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+  white-space: nowrap;
+}
+.glass-btn:disabled             { opacity: 0.4; cursor: not-allowed; }
+.glass-btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,0.4); }
+.glass-btn:active:not(:disabled){ transform: translateY(0); }
+
+.glass-btn--primary {
+  background-color: var(--color-accent);
+  color: #ffffff;
+  border: none;
+}
+.glass-btn--primary:hover:not(:disabled) { background-color: #4A7AE8; }
+
+.glass-btn--ghost {
+  background-color: rgba(255, 255, 255, 0.04);
+  color: var(--color-on-surface);
+  border: 1px solid var(--color-border);
+}
+.glass-btn--ghost:hover:not(:disabled) { background-color: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); }
+
+/* ── Filter Sidebar ──────────────────────────────────────────── */
+.container-filters {
+  background: rgba(16, 20, 29, 0.97) !important;
+  backdrop-filter:         var(--glass-blur-standard);
+  -webkit-backdrop-filter: var(--glass-blur-standard);
+  border-right: 1px solid var(--color-border);
+  color: var(--color-on-surface);
+  padding-top: 80px;
+}
+.filter-by-type span              { color: var(--color-primary); font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+.group-type label                 { color: var(--color-on-surface); font-size: 14px; }
+.group-type input[type="checkbox"]{ accent-color: var(--color-accent); }
+
+/* ── Pokémon Grid ────────────────────────────────────────────── */
+.pokemon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  padding: 24px;
+}
+
+/* ── Type Badges ─────────────────────────────────────────────── */
+.type-badge {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: var(--rounded-md);
+  color: #ffffff;
+}
+
+/* ── Stat Bar ────────────────────────────────────────────────── */
+.stat-bar-track {
+  flex: 1;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--rounded-full);
+  overflow: hidden;
+}
+.stat-bar-fill {
+  height: 100%;
+  border-radius: var(--rounded-full);
+  background: var(--color-accent);
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Abilities ───────────────────────────────────────────────── */
+.abilities-grid { display: flex; flex-direction: column; gap: 12px; }
+
+.ability-badge {
+  background: var(--color-bg-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--rounded-lg);
+  padding: 10px 14px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-on-surface);
+}
+.ability-badge.hidden-ability {
+  border-color: rgba(255, 204, 0, 0.3);
+  color: #F0C040;
+}
+.ability-badge .hidden-tag {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: rgba(255, 204, 0, 0.18);
+  color: #F0C040;
+  padding: 2px 7px;
+  border-radius: var(--rounded-full);
+  vertical-align: middle;
+}
+
+/* ── Evolution Chain ─────────────────────────────────────────── */
+.evolution-chain {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 8px 0;
+}
+.evolution-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  color: var(--color-on-surface);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  transition: transform 0.2s ease, color 0.2s ease;
+  padding: 8px;
+  border-radius: var(--rounded-lg);
+}
+.evolution-item:hover { transform: translateY(-3px); color: var(--color-primary); background: rgba(255,255,255,0.04); }
+.evolution-item img {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6));
+}
+.evolution-arrow { color: var(--color-on-surface-var); font-size: 16px; margin: 0 4px; }
+
+/* ── Typography helpers ──────────────────────────────────────── */
+.section-heading {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-on-surface-var);
+  line-height: 20px;
+  margin-bottom: 16px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.pokemon-number {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--color-on-surface-var);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.pokemon-name {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin: 4px 0 8px;
+  text-transform: capitalize;
+}
+
+/* ── Load More area ──────────────────────────────────────────── */
+.load-more-area {
+  display: flex;
+  justify-content: center;
+  padding: 32px 0 56px;
+}
+
+
+/* ── Inter Font ──────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* ── CSS Design Tokens ───────────────────────────────────────── */
+:root {
+  --glass-standard-bg:       rgba(255, 255, 255, 0.10);
+  --glass-elevated-bg:       rgba(255, 255, 255, 0.20);
+  --glass-border:            rgba(255, 255, 255, 0.20);
+  --glass-border-inner:      rgba(255, 255, 255, 0.08);
+  --glass-blur-standard:     blur(20px);
+  --glass-blur-elevated:     blur(40px);
+  --glass-shadow-standard:   0 8px 32px 0 rgba(0, 0, 0, 0.10);
+  --glass-shadow-elevated:   0 8px 32px 0 rgba(0, 0, 0, 0.18);
+
+  --color-on-surface:        #dae2fd;
+  --color-on-surface-var:    #c4c7c8;
+  --color-primary:           #ffffff;
+  --color-on-primary:        #2f3131;
+  --color-secondary:         #adc9eb;
+  --color-primary-fixed-dim: #c6c6c7;
+  --color-outline:           rgba(255, 255, 255, 0.20);
+
+  --rounded-md:  0.75rem;
+  --rounded-lg:  1rem;
+  --rounded-xl:  1.5rem;
+  --rounded-full:9999px;
+
+  --font-sans: 'Inter', 'Montserrat', sans-serif;
+}
+
+/* ── Glass Container ─────────────────────────────────────────── */
+.glass-container {
+  position: relative;
+  color: var(--color-primary);
+}
+
+/* ── Glass Navigation (sticky header) ───────────────────────── */
+.glass-nav {
+  background: rgba(6, 14, 32, 0.75);
+  backdrop-filter:         var(--glass-blur-standard);
+  -webkit-backdrop-filter: var(--glass-blur-standard);
+  border-bottom: 1px solid var(--glass-border-inner);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* ── Glass Input ─────────────────────────────────────────────── */
+.glass-input {
+  background: var(--glass-standard-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--rounded-full);
+  padding: 10px 20px;
+  color: var(--color-primary);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 500; /* Weight Tier Up on glass */
+  outline: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.glass-input::placeholder { color: rgba(255, 255, 255, 0.45); }
+.glass-input:focus {
+  border-color: rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ── Buttons ─────────────────────────────────────────────────── */
+.glass-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: var(--rounded-xl);
+  height: 48px;
+  padding: 0 24px;
+  cursor: pointer;
+  outline: none;
+  text-decoration: none;
+  transition: background-color 0.18s ease, transform 0.1s ease, box-shadow 0.18s ease;
+  white-space: nowrap;
+}
+.glass-btn:disabled            { opacity: 0.5; cursor: not-allowed; }
+.glass-btn:hover:not(:disabled){ transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28); }
+.glass-btn:active:not(:disabled){ transform: translateY(0); }
+
+.glass-btn--primary {
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  border: none;
+}
+.glass-btn--primary:hover:not(:disabled) { background-color: var(--color-primary-fixed-dim); }
+
+.glass-btn--ghost {
+  background-color: rgba(255, 255, 255, 0.06);
+  color: var(--color-primary);
+  border: 1px solid var(--glass-border);
+}
+.glass-btn--ghost:hover:not(:disabled) { background-color: rgba(255, 255, 255, 0.12); }
+
+/* ── Glass Filter Sidebar ────────────────────────────────────── */
+/* Keeps existing positioning/animation from index.css */
+.container-filters {
+  background: rgba(6, 14, 32, 0.88) !important;
+  backdrop-filter:         var(--glass-blur-elevated);
+  -webkit-backdrop-filter: var(--glass-blur-elevated);
+  border-right: 1px solid var(--glass-border);
+  color: var(--color-on-surface);
+  padding-top: 80px;
+}
+.filter-by-type span  { color: var(--color-primary); }
+.group-type label     { color: var(--color-on-surface); }
+.group-type input[type="checkbox"] { accent-color: var(--color-secondary); }
+
+/* ── Pokemon Grid ────────────────────────────────────────────── */
+.pokemon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 16px;
+  padding: 24px;
+}
+
+/* ── Type Badges ─────────────────────────────────────────────── */
+.type-badge {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: var(--rounded-full);
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* ── Stat Bar ────────────────────────────────────────────────── */
+.stat-bar-track {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: var(--rounded-full);
+  overflow: hidden;
+}
+.stat-bar-fill {
+  height: 100%;
+  border-radius: var(--rounded-full);
+  background: linear-gradient(90deg, #adc9eb 0%, #ffffff 100%);
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Abilities ───────────────────────────────────────────────── */
+.abilities-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.ability-badge {
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--rounded-md);
+  padding: 6px 14px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-on-surface);
+}
+.ability-badge.hidden-ability {
+  border-color: rgba(173, 201, 235, 0.45);
+  color: var(--color-secondary);
+}
+
+/* ── Evolution Chain ─────────────────────────────────────────── */
+.evolution-chain {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 8px 0;
+}
+.evolution-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--color-primary);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600; /* Weight Tier Up */
+  transition: transform 0.2s ease;
+}
+.evolution-item:hover { transform: translateY(-4px); }
+.evolution-item img {
+  width: 88px;
+  height: 88px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.35));
+}
+.evolution-arrow { color: rgba(255, 255, 255, 0.45); font-size: 22px; }
+
+/* ── Typography helpers ──────────────────────────────────────── */
+.section-heading {
+  font-family: var(--font-sans);
+  font-size: 20px;
+  font-weight: 600; /* Weight Tier Up (headlineMd on glass) */
+  color: var(--color-primary);
+  line-height: 28px;
+  margin-bottom: 16px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+.pokemon-number {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.55);
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+.pokemon-name {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  font-weight: 700; /* Weight Tier Up */
+  color: var(--color-primary);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  margin: 2px 0 10px;
+  text-transform: capitalize;
+}
+
+/* ── Load More area ──────────────────────────────────────────── */
+.load-more-area {
+  display: flex;
+  justify-content: center;
+  padding: 32px 0 56px;
+}
